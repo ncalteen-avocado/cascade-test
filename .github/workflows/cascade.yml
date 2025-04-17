@@ -20,10 +20,18 @@ jobs:
       startsWith(github.head_ref, 'release/')
 
     steps:
+      - name: Get GitHub App Token
+        id: token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.GH_APP_ID }}
+          private-key: ${{ secrets.GH_APP_PEM }}
+          owner: ${{ github.repository_owner }}
+
       - name: Automatic Merge
         uses: ActionsDesk/cascading-downstream-merge@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           prefixes: release/
           ref_branch: development
-          merge_token: ${{ secrets.MERGE_TOKEN }}
+          merge_token: ${{ steps.token.outputs.token }}
