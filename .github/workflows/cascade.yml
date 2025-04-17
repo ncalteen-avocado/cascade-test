@@ -26,3 +26,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           prefixes: release/
           ref_branch: development
+          merge_token: ${{ secrets.MERGE_TOKEN }}
